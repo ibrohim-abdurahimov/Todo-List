@@ -2,6 +2,7 @@ const form = document.querySelector(".form")
 const inp = document.querySelector(".form input")
 const collection = document.querySelector(".collection")
 const wr = document.querySelector(".wrapper")
+const clearAllButton  = document.querySelector(".clear-btn")
 
 
 
@@ -14,10 +15,19 @@ function createList(data){
     data.forEach(item =>{
         let p = document.createElement("p")
         p.classList.add("list")
-        p.innerHTML = item.title
+        p.innerHTML = `<span>${item.title}</span> <button>del</button>`
+        
+        p.querySelector('button').addEventListener('click', function (e) {
+        e.stopPropagation();
+        p.remove();
+});
         collection.appendChild(p)
         wr.scrollTop = wr.scrollHeight
     })
+}
+function clearAllTasks() {
+    collection.innerHTML = "";
+    localStorage.clear()
 }
 createList(DATA)
 
@@ -36,6 +46,8 @@ form.addEventListener("submit", e => {
     inp.value = ""
     createList(DATA)
 })
-function refresh(){
-    localStorage.clear()
-}
+clearAllButton.addEventListener('click', clearAllTasks);
+
+
+
+
